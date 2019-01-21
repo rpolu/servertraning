@@ -2,27 +2,38 @@ package com.server.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.server.bean.Student;
 
 @Repository
 public class StudentDao {
-	static List<Student> al = new ArrayList<>();
+	@Autowired
+	private JdbcTemplate template;
+	final Logger logger = LogManager.getLogger(StudentDao.class);
 
 	public List<Student> getAllStudents() {
-		Student s1 = new Student(10, "rama", "90", "Marathalli");
-		Student s2 = new Student(11, "Ravi", "91", "Bang");
-		Student s3 = new Student(11, "Narashimaiah", "92", "SilkBorad");
-		al.add(s1);
-		al.add(s2);
-		al.add(s3);
+			String x = null;
+			x.length();
+		List<Student> al = new ArrayList<>();
+		List<Map<String, Object>> rows = template.queryForList("select * from student");
+		for (Map row : rows) {
+			Student s = new Student((int) row.get("rollnum"), (String) row.get("name"), (int) row.get("marks"),
+					(String) row.get("address"));
+			al.add(s);
+		}
 		return al;
 	}
 
 	public void addStudet(Student student) {
-		al.add(student);
+		template.update("insert into student values(?,?,?,?)", student.getRollNum(), student.getName(),
+				student.getMarks(), student.getAddress());
 	}
 
 }

@@ -10,6 +10,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -23,11 +25,15 @@ public class StudentController {
 	@Autowired
 	private StudentService service;
 
+	final Logger logger = LogManager.getLogger(StudentController.class);
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path(value = "/getAll")
 	public Response gettAllStudents() {
+		logger.info(" Request came to controller");
 		List<Student> students = service.getStudents();
+		logger.info("Service call oSver ");
 		StatusBean bean = new StatusBean();
 		bean.setData(students);
 		return Response.ok().entity(bean).build();

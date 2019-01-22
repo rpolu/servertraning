@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.server.bean.Student;
 import com.server.dao.StudentDao;
+import com.server.rest.exception.UserNotAvailbleException;
 
 @Service
 public class StudentService {
@@ -17,8 +18,14 @@ public class StudentService {
 		return dao.getAllStudents();
 	}
 
-	public void addStudet(Student student) {
+	public void addStudet(Student student) throws UserNotAvailbleException {
+		if (true) {
+
+			throw new UserNotAvailbleException();
+
+		}
 		dao.addStudet(student);
+
 	}
 
 }

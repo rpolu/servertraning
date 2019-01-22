@@ -10,15 +10,15 @@ import org.apache.logging.log4j.Logger;
 import com.config.status.StatusBean;
 
 @Provider
-public class ExpMapper implements ExceptionMapper<RuntimeException> {
+public class NotAvailableMapper implements ExceptionMapper<UserNotAvailbleException> {
 	private static final long serialVersionUID = 1L;
-	final Logger logger = LogManager.getLogger(ExpMapper.class);
+	final Logger logger = LogManager.getLogger(NotAvailableMapper.class);
 
 	@Override
-	public Response toResponse(RuntimeException exception) {
+	public Response toResponse(UserNotAvailbleException exception) {
 		logger.error("Problem occued ", exception.getCause(), exception);
 		StatusBean bean = new StatusBean();
-		bean.setStCode("E001");
+		bean.setStCode("E002");
 		bean.setData("Problem Occured");
 		return Response.ok().entity(bean).build();
 	}

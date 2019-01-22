@@ -19,8 +19,6 @@ public class StudentDao {
 	final Logger logger = LogManager.getLogger(StudentDao.class);
 
 	public List<Student> getAllStudents() {
-			String x = null;
-			x.length();
 		List<Student> al = new ArrayList<>();
 		List<Map<String, Object>> rows = template.queryForList("select * from student");
 		for (Map row : rows) {
